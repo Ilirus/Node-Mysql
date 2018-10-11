@@ -1,12 +1,12 @@
-const express 		= require('express');
-const logger 	    = require('morgan');
-const bodyParser 	= require('body-parser');
-const passport      = require('passport');
-const pe            = require('parse-error');
-const cors          = require('cors');
+const express = require('express');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const pe = require('parse-error');
+const cors = require('cors');
 
-const v1    = require('./routes/v1');
-const app   = express();
+const v1 = require('./routes/v1');
+const app = express();
 
 const CONFIG = require('./config/config');
 
@@ -24,14 +24,14 @@ console.log("Environment:", CONFIG.app)
 //DATABASE
 const models = require("./models");
 models.sequelize.authenticate().then(() => {
-    console.log('Connected to SQL database:', CONFIG.db_name);
+  console.log('Connected to SQL database:', CONFIG.db_name);
 })
 .catch(err => {
-    console.error('Unable to connect to SQL database:',CONFIG.db_name, err);
+  console.error('Unable to connect to SQL database:',CONFIG.db_name, err);
 });
 if(CONFIG.app==='dev'){
-    models.sequelize.sync();//creates table if they do not already exist
-    // models.sequelize.sync({ force: true });//deletes all tables then recreates them useful for testing and development purposes
+  models.sequelize.sync();//creates table if they do not already exist
+  // models.sequelize.sync({ force: true });//deletes all tables then recreates them useful for testing and development purposes
 }
 // CORS
 app.use(cors());
@@ -65,5 +65,5 @@ module.exports = app;
 
 //This is here to handle all the uncaught promise rejections
 process.on('unhandledRejection', error => {
-    console.error('Uncaught Error', pe(error));
+  console.error('Uncaught Error', pe(error));
 });
