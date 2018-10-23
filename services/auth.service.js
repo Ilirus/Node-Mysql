@@ -1,15 +1,15 @@
-const { User } 	    = require('../models');
-const validator     = require('validator');
-const { to, TE }    = require('../services/util.service');
+const { User } = require('../models');
+const validator = require('validator');
+const { to, TE } = require('../services/util.service');
 
 const getUniqueKeyFromBody = function(body){// this is so they can send in 3 options unique_key, email, or phone and it will work
     let unique_key = body.unique_key;
-    if(typeof unique_key==='undefined'){
-        if(typeof body.email != 'undefined'){
+    if (typeof unique_key === 'undefined'){
+        if (typeof body.email !== 'undefined'){
             unique_key = body.email
-        }else if(typeof body.phone != 'undefined'){
+        } else if (typeof body.phone != 'undefined') { 
             unique_key = body.phone
-        }else{
+        } else {
             unique_key = null;
         }
     }
@@ -32,7 +32,7 @@ const createUser = async (userInfo) => {
         userInfo.email = unique_key;
 
         [err, user] = await to(User.create(userInfo));
-        if(err) TE('user already exists with that email');
+        if(err) TE('user already exists with that email ' + JSON.stringify(err) + JSON.stringify(user));
 
         return user;
 
