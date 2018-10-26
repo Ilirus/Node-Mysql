@@ -1,6 +1,13 @@
 const {to} = require('await-to-js');
 const pe = require('parse-error');
 
+class AppError extends Error {
+  constructor (...args) {
+    super(...args)
+    Error.captureStackTrace(this, AppError)
+  }
+}
+
 module.exports.to = async (promise) => {
   let err, res;
   [err, res] = await to(promise);
@@ -29,11 +36,7 @@ module.exports.ReS = function(res, data, code){ // Success Web Response
   return res.json(send_data)
 };
 
-module.exports.TE = TE = function(err_message, log){ // TE stands for Throw Error
-  if (log === true) {
-    console.error(err_message);
-  }
-  throw new Error(err_message);
-};
-
-
+module.exports.TE = (errMessage, log) => { // TE stands for Throw Error
+  console.error(errMessage)
+  throw new AppError(...errMessage)
+}

@@ -7,8 +7,8 @@ const CONFIG = require('../config/config');
 
 module.exports = (sequelize, DataTypes) => {
     const Model = sequelize.define('User', {
-        first: DataTypes.STRING,
-        last: DataTypes.STRING,
+        firstName: DataTypes.STRING,
+        lastName: DataTypes.STRING,
         email: {
           type: DataTypes.STRING, 
           allowNull: true, 
@@ -77,8 +77,7 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     Model.prototype.toWeb = function (pw) {
-        const json = this.toJSON();
-        return json;
+      return {firstName, lastName, email, phone, id} = this.toJSON();
     };
     
     return Model;

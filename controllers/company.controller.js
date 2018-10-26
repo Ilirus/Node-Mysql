@@ -1,7 +1,7 @@
 const { Company } = require('../models');
 const { to, ReE, ReS } = require('../services/util.service');
 
-const create = async function(req, res){
+const create = async (req, res) => {
   const user = req.user;
   const company_info = req.body;
   let err, company, company_json;
